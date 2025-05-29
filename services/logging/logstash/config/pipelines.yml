@@ -1,0 +1,29 @@
+- pipeline.id: nginx.access
+  pipeline.batch.size: 1
+  pipeline.workers: ${T_LOGSTASH_NBWORKER}
+  path.config: /app/config/pipelines/nginx.access.conf
+
+- pipeline.id: nginx.errors
+  pipeline.batch.size: 1
+  pipeline.workers: ${T_LOGSTASH_NBWORKER}
+  path.config: /app/config/pipelines/nginx.errors.conf
+
+- pipeline.id: django
+  pipeline.batch.size: 1
+  pipeline.workers: ${T_LOGSTASH_NBWORKER}
+  path.config: /app/config/pipelines/django.conf
+
+- pipeline.id: pgsql
+  pipeline.batch.size: 1
+  pipeline.workers: ${T_LOGSTASH_NBWORKER}
+  path.config: /app/config/pipelines/pgsql.conf
+
+- pipeline.id: react
+  pipeline.batch.size: 1
+  pipeline.workers: ${T_LOGSTASH_NBWORKER}
+  path.config: /app/config/pipelines/react.conf
+
+- pipeline.id: redis
+  pipeline.batch.size: 1
+  pipeline.workers: ${T_LOGSTASH_NBWORKER}
+  path.config: /app/config/pipelines/redis.conf

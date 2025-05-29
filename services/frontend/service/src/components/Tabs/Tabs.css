@@ -1,0 +1,74 @@
+.tabs {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.tabs.vertical {
+    flex-direction: row !important;
+}
+
+.tabs > header {
+    display: flex;
+    flex-direction: row;
+}
+
+.tabs.vertical > header {
+    flex-direction: column !important;
+}
+
+.tabs > header > button {
+    width: 100%;
+    padding: 16px 32px;
+    background-color: transparent;
+    color: #e3e3e3;
+    transition: background-color 300ms, border 300ms;
+    border: none;
+    cursor: pointer;
+}
+
+.tabs > header > button:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.tabs > header > button:disabled {
+    color: #666666;
+}
+
+.tabs > header > button.active {
+    font-weight: bold;
+    border-bottom: 4px solid var(--color-primary);
+    cursor: default;
+}
+
+.tabs.vertical > header > button.active {
+    border-left: 4px solid var(--color-primary) !important;
+    border-bottom: none !important;
+}
+
+.tabs > header > button > i + .text {
+    margin-left: 8px;
+}
+
+
+.tabs > .content {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.tabs > .content > .tab {
+    display: none;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: var(--default-padding);
+    animation: fadeIn 300ms;
+}
+
+.tabs > .content > .tab.active {
+    display: flex;
+    flex-direction: column;
+}

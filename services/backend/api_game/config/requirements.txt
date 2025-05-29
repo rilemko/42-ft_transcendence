@@ -1,0 +1,10 @@
+channels
+channels_redis
+daphne
+django
+django-cors-headers
+django-prometheus
+djangorestframework
+djangorestframework-simplejwt
+psycopg2-binary
+requests

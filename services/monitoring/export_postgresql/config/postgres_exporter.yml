@@ -1,0 +1,11 @@
+### AUTHENTICATION #############################################
+
+auth_modules:
+
+  auth:
+    type: userpass
+    userpass:
+      username: postgres
+      password: ${T_PGSQL_ROOTPASS}
+    options:
+      sslmode: disable

@@ -1,0 +1,51 @@
+.profile-stats {
+    gap: 0 !important;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.profile-stats > header {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+
+.profile-stats > header > h3 {
+    color: #e3e3e3;
+}
+
+.profile-stats > header > .button.refresh {
+    margin-left: auto;
+}
+
+.profile-stats > .col.content {
+    gap: 8px !important;
+    height: 100%;
+    width: 100%;
+    padding: 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.profile-stats > .col.content > .loading {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-content: center;
+    animation: fadeIn 300ms;
+    position: absolute;
+    z-index: 1;
+}
+
+.profile-stats > .col.content > .loading > .loader {
+    margin: auto;
+}
+
+.profile-stats > .col.content > .line {
+    height: 104px;
+    width: 100%;
+    padding: 24px;
+    background-color:var(--color-secondary);
+    border-radius: var(--default-radius);
+}

@@ -1,0 +1,87 @@
+.burger {
+    height: 100%;
+    width: 100%;
+    max-width: 340px;
+    padding: var(--default-padding) 0 var(--default-padding) var(--default-padding);
+    position: relative;
+    z-index: 50;
+    pointer-events: none;
+}
+
+@media (max-width: 460px) {
+
+    .burger {
+        padding: 0;
+        max-width: 100% !important;
+        border-radius: 0 !important;
+        position: fixed !important;
+    }
+}
+
+.burger > .button.burger {
+    display: none;
+    top: 24px;
+    right: 24px;
+    height: auto;
+    width: auto;
+    animation: fadeIn 300ms;
+    position: absolute;
+    pointer-events: auto;
+    z-index: 55;
+}
+
+@media (max-width: 460px) {
+
+    .burger > .button.burger {
+        display: block !important;
+    }
+}
+
+.burger > nav.menu {
+    display: flex;
+    height: 100%;
+    width: 320px;
+    padding: var(--default-padding);
+    background-color: var(--color-background-d);
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);
+    animation: slideLeft 300ms;
+    border-radius: var(--default-radius);
+    pointer-events: auto;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+@media (max-width: 460px) {
+
+    .burger > nav.menu {
+        display: none;
+        width: 100% !important;
+        padding-top: 84px !important;
+        animation: slideRight 300ms;
+        border-radius: 0 !important;
+        position: relative !important;
+    }
+}
+
+.burger > nav.menu.open {
+    display: flex !important;
+    max-width: 100% !important;
+}
+
+.burger > nav.menu .col.astronaut-preview {
+    width: 100%;
+    padding: var(--default-padding);
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: var(--default-radius);
+    overflow: hidden;
+}
+
+.burger > nav.menu > .players {
+    min-height: 280px;
+    height: 100%;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: var(--default-radius);
+    overflow: hidden;
+}

@@ -1,0 +1,41 @@
+#space-background {
+    display: flex;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(-45deg,
+        #353535,
+        #202020,
+        #000000,
+        #151515,
+        #101010,
+        #000000,
+        #151515,
+        #101010,
+        #000000,
+        #101010,
+        #000000,
+        #202020
+    );
+	background-size: 200% 200%;
+	animation: gradient 25s ease-in-out infinite;
+    position: absolute;
+    overflow: hidden;
+}
+
+#space-background > .star {
+    height: 2px;
+    width: 2px;
+    background-color: white;
+    opacity: 0.8;
+    border-radius: 50%;
+    animation: move linear infinite;
+    animation-delay: -20s;
+    position: absolute;
+    overflow: hidden;
+}
+
+@keyframes move {
+    0%      {transform: translateX(-100vw)}
+    100%    {transform: translateX(+100vw)}
+}

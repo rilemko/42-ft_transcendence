@@ -1,0 +1,41 @@
+.players-list {
+    gap: 0 !important;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.players-list > .loading {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-content: center;
+    animation: fadeIn 300ms;
+    position: absolute;
+    z-index: 1;
+}
+
+.players-list > .loading > .loader {
+    margin: auto;
+}
+
+.players-list > header {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+
+.players-list > header > h3 {
+    color: #e3e3e3;
+}
+
+.players-list > header > .button.refresh {
+    margin-left: auto;
+}
+
+.players-list > .content {
+    gap: 8px !important;
+    padding: 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

@@ -1,0 +1,44 @@
+.game-history {
+    gap: 0 !important;
+    height: 100%;
+    width: 100%;
+    border-radius: var(--default-radius);
+    overflow: hidden;
+}
+
+.game-history > header {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+
+.game-history > header > h3 {
+    color: #e3e3e3;
+}
+
+.game-history > header > .button.refresh {
+    margin-left: auto;
+}
+
+.game-history > .col.content {
+    gap: 8px !important;
+    height: 100%;
+    width: 100%;
+    padding: 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.game-history > .col.content > .loading {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-content: center;
+    animation: fadeIn 300ms;
+    position: absolute;
+    z-index: 1;
+}
+
+.game-history > .col.content > .loading > .loader {
+    margin: auto;
+}
