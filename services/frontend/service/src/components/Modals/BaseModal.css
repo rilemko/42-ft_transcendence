@@ -1,0 +1,63 @@
+.modal-container
+{
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    align-content: center;
+    animation: fadeIn 300ms;
+    position: fixed;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.modal-container > .modal
+{
+    height: auto;
+    max-height: 90%;
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    background-color: var(--color-background-d);
+    color: var(--color-text-l);
+    animation: slideUp 300ms;
+    border-radius: var(--default-radius);
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+@media (max-width: 460px) {
+
+    .modal-container > .modal {
+        bottom: 0;
+        width: 100% !important;
+        border-radius: var(--default-radius) var(--default-radius) 0 0;
+        position: absolute !important;
+    }
+}
+
+.modal-container > .modal > .col.content
+{
+    height: 100%;
+    max-height: 320px;
+    width: 100%;
+    padding: var(--default-padding);
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modal-container > .modal > .row.action
+{
+    padding: var(--default-padding);
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 460px) {
+
+    .modal-container > .modal > .row.action {
+        flex-direction: column-reverse !important;
+    }
+}

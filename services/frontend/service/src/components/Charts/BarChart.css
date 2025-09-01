@@ -1,0 +1,46 @@
+.barchart {
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.barchart > .chart {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    gap: 4px;
+    flex-shrink: 0;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+}
+
+.barchart > .chart > .bar {
+    flex: 1;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.barchart > .col.data {
+    gap: 0 !important;
+    align-items: end;
+    height: auto;
+    width: auto;
+    margin-left: auto;
+    overflow: hidden;
+}
+
+.barchart > .col.data > .row {
+    align-items: center;
+}
+
+.barchart > .col.data .indicator {
+    height: 12px;
+    width: 12px;
+    background-color: #505050;
+    border-radius: 50%;
+}
+
+.barchart > .col.data > .row > p {
+    font-size: 12px;
+}
+

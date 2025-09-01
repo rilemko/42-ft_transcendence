@@ -1,0 +1,19 @@
+global:
+  smtp_smarthost: "${T_SMTP_HOSTNAME}:${T_SMTP_HOSTPORT}"
+  smtp_from: "${T_SMTP_USERNAME}"
+  smtp_auth_username: "${T_SMTP_USERNAME}"
+  smtp_auth_password: "${T_SMTP_PASSWORD}"
+  smtp_require_tls: true
+
+route:
+  group_by: ["alertname"]
+  group_interval: 10m
+  group_wait: 10s
+  repeat_interval: 10m
+  receiver: "alert"
+
+receivers:
+  - name: "alert"
+    email_configs:
+      - to: "${T_CONTACT_LIST}"
+        send_resolved: true

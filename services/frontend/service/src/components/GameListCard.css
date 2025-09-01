@@ -1,0 +1,74 @@
+tr.game-list-card {
+    min-height: 68px;
+    background-color: var(--color-secondary) !important;
+    color: #e3e3e3;
+    cursor: pointer;
+}
+
+tr.game-list-card:hover {
+    background-color: var(--color-secondary_hover) !important;
+}
+
+tr.game-list-card > td.elem > .status {
+    height: 8px;
+    width: 8px;
+    max-width: 8px;
+    margin: auto;
+    background-color: #505050;
+    border-radius: 50%;
+}
+
+tr.game-list-card > td.elem > .status.waiting {
+    background-color: var(--color-success) !important;
+}
+
+tr.game-list-card > td.elem > .status.ready {
+    background-color: var(--color-primary) !important;
+}
+
+tr.game-list-card > td.elem > .main {
+    max-width: 100%;
+    font-size: 14px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@media (max-width: 460px) {
+
+    tr.game-list-card > td.elem > .main {
+        width: 96px !important;
+    }
+}
+
+tr.game-list-card > td.elem > .sub {
+    max-width: 100%;
+    font-size: 12px;
+    line-height: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@media (max-width: 1000px) {
+
+    tr.game-list-card > td.elem.score {
+        display: none !important;
+    }
+}
+
+@media (max-width: 460px) {
+
+    tr.game-list-card > td.elem > .sub {
+        width: 96px !important;
+    }
+
+    tr.game-list-card > td.elem.type > p {
+        width: 64px !important;
+    }
+
+    tr.game-list-card > td.elem.count > p {
+        width: 32px !important;
+    }
+}

@@ -1,0 +1,39 @@
+.piechart {
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.piechart > .chart {
+    flex-shrink: 0;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.piechart > .col.data {
+    gap: 0 !important;
+    align-items: end;
+    height: auto;
+    width: auto;
+    margin-left: auto;
+    overflow: hidden;
+}
+
+.piechart > .col.data > .row {
+    align-items: center;
+}
+
+.piechart > .col.data .indicator {
+    height: 12px;
+    width: 12px;
+    background-color: #505050;
+    border-radius: 50%;
+}
+
+.piechart > .col.data > .row > p {
+    font-size: 12px;
+}
+

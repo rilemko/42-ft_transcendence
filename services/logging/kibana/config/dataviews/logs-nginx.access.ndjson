@@ -1,0 +1,1 @@
+{"type":"index-pattern","id":"logs-nginx.access","attributes":{"name":"logs-nginx.access","title":"logs-nginx.access-*","timeFieldName":"@timestamp"}}

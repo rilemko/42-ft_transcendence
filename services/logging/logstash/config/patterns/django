@@ -1,0 +1,2 @@
+DATE_DJANGO %{YEAR}/%{MONTHNUM}/%{MONTHDAY} %{TIME}
+PATTERN_DJANGO %{DATE_DJANGO:datetime}, backend: \"%{DATA:backend}\", level: \"%{LOGLEVEL:level}\", message: \"%{GREEDYDATA:content}\", file: \"%{DATA:file}\", function: \"%{DATA:function}\", line: \"%{NUMBER:line}\"

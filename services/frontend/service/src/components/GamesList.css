@@ -1,0 +1,61 @@
+.games-list
+{
+    gap: 0px !important;
+    height: 100%;
+    max-height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.games-list > header.row
+{
+    align-items: center;
+    padding: var(--default-padding);
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.games-list > header.row > .col.title
+{
+    flex: auto;
+    flex-shrink: 0.01;
+    color: var(--color-text-l);
+}
+
+.games-list > header.row > .col.control
+{
+    flex: 1;
+}
+
+.games-list > header.row > .col.control > .row
+{
+    justify-content: end;
+}
+
+.games-list > header.row > .col.control .button.create
+{
+    flex: auto;
+    max-width: 280px;
+}
+
+.games-list > header.row > .col.control .button.refresh
+{
+    flex: none;
+}
+
+@media (max-width: 460px) {
+
+    .games-list > header.row > .col.control .button.refresh
+    {
+        display: none !important;
+    }
+}
+
+.games-list > .col.content
+{
+    height: 100%;
+    width: 100%;
+    padding: 24px;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

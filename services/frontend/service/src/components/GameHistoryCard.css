@@ -1,0 +1,95 @@
+tr.game-history-card {
+    min-height: 68px;
+    background-color: var(--color-secondary) !important;
+    transition: background-color 300ms;
+    cursor: default;
+}
+
+tr.game-history-card:hover {
+    background-color: var(--color-secondary_hover) !important;
+}
+
+tr.game-history-card > td.elem.loading  {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-content: center;
+    animation: fadeIn 300ms;
+    position: absolute;
+    z-index: 1;
+}
+
+tr.game-history-card> td.elem.loading > .loader {
+    margin: auto;
+}
+
+tr.game-history-card > td.elem > .status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    background-color: #505050;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    border-radius: 50%;
+}
+
+tr.game-history-card > td.elem > .status.win {
+    height: 24px !important;
+    width: 24px !important;
+    max-width: 24px !important;
+    background-color: var(--color-success) !important;
+}
+
+tr.game-history-card > td.elem > .status.lose {
+    height: 8px;
+    width: 8px;
+    max-width: 8px;
+    background-color: var(--color-alert) !important;
+}
+
+tr.game-history-card > td.elem > .main {
+    max-width: 100%;
+    font-size: 14px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+tr.game-history-card > td.elem > .sub {
+    max-width: 100%;
+    font-size: 12px;
+    line-height: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@media (max-width: 460px) {
+
+    tr.game-history-card > td.elem.duration {
+        display: none !important;
+    }
+}
+
+tr.game-history-card > td.elem.players {
+    min-width: 84px;
+}
+
+tr.game-history-card > td.elem.players > .list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+tr.game-history-card > td.elem.players > .list > .avatar {
+    height: 24px;
+    aspect-ratio: 1 / 1;
+    background-color: rgba(0, 0, 0, 0.1);
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-radius: 50%;
+}

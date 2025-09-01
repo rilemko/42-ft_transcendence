@@ -1,0 +1,84 @@
+### GLOBAL #####################################################
+
+global:
+
+  scrape_interval: 10s
+  scrape_timeout: 10s
+  evaluation_interval: 10s
+
+### RULES ######################################################
+
+rule_files:
+
+  - alerts.yml
+
+### ALERTING ###################################################
+
+alerting:
+
+  alertmanagers:
+    - scheme: http
+      static_configs:
+        - targets: ["alertmanager:${T_PORT_INTERN_METRICS}"]
+
+### SCRAPING ###################################################
+
+scrape_configs:
+
+  - job_name: nginx
+    static_configs:
+      - targets: [export_nginx:${T_PORT_INTERN_METRICS}]
+        labels:
+          group: frontend
+    metrics_path: ${T_ENDPOINT_METRICS}
+
+  - job_name: django
+    static_configs:
+      - targets: [auth:${T_PORT_INTERN_BACKEND}, game:${T_PORT_INTERN_BACKEND}]
+        labels:
+          group: backend
+    metrics_path: ${T_ENDPOINT_METRICS}
+
+  - job_name: postgresql
+    static_configs:
+      - targets: [db_auth:${T_PORT_INTERN_POSTGRE}, db_game:${T_PORT_INTERN_POSTGRE}]
+        labels:
+          group: databases
+    metrics_path: /probe
+    params:
+      auth_module: [auth]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: export_postgresql:${T_PORT_INTERN_METRICS}
+
+  - job_name: prometheus
+    static_configs:
+      - targets: [prometheus:${T_PORT_INTERN_METRICS}]
+        labels:
+          group: monitoring
+    metrics_path: ${T_ENDPOINT_METRICS}
+
+  - job_name: node
+    static_configs:
+      - targets: [export_node:${T_PORT_INTERN_METRICS}]
+        labels:
+          group: monitoring
+    metrics_path: ${T_ENDPOINT_METRICS}
+
+  - job_name: redis
+    static_configs:
+      - targets: [export_redis:${T_PORT_INTERN_METRICS}]
+        labels:
+          group: caching
+    metrics_path: ${T_ENDPOINT_METRICS}
+
+  - job_name: elasticsearch
+    static_configs:
+      - targets: [export_elasticsearch:${T_PORT_INTERN_METRICS}]
+        labels:
+          group: logging
+    metrics_path: ${T_ENDPOINT_METRICS}

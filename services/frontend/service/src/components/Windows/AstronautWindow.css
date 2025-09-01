@@ -1,0 +1,34 @@
+.window.astronaut .row.content
+{
+    flex: 1;
+    gap: 0;
+    height: 100%;
+}
+
+@media (max-width: 460px) {
+
+    .window.astronaut .row.content
+    {
+        flex-direction: column;
+    }
+}
+
+.window.astronaut .row.content > .col.preview
+{
+    flex: 0.5;
+    padding: var(--default-padding);
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 460px) {
+
+    .window.astronaut .row.content > .col.preview
+    {
+        max-height: 256px;
+    }
+}
+
+.window.astronaut .row.content > .col.action
+{
+    flex: 1;
+}

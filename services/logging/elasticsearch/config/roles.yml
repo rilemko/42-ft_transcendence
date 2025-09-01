@@ -1,0 +1,49 @@
+## > LOGSTASH < ################
+
+t_logstash:
+  cluster:
+    - manage_index_templates
+    - monitor
+  indices:
+    - names:
+        - "logs-*"
+      privileges:
+        - create
+        - create_index
+        - manage
+        - manage_ilm
+        - read
+        - view_index_metadata
+        - write
+
+
+## > KIBANA < ##################
+
+t_kibana:
+  cluster:
+    - monitor
+  indices:
+    - names:
+        - "logs-*"
+      privileges:
+        - read
+        - view_index_metadata
+  applications:
+    - application: "kibana-*"
+      privileges:
+        - read
+      resources:
+        - "*"
+
+## > EXPORTER < ################
+
+t_exporter:
+  cluster:
+    - monitor
+  indices:
+    - names:
+        - "*"
+      privileges:
+        - monitor
+        - view_index_metadata
+

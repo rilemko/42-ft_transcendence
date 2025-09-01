@@ -1,0 +1,15 @@
+.input input.twofa {
+    flex: 1;
+    height: auto;
+    min-width: 0;
+    width: auto;
+    padding: 8px 16px;
+    background-color: var(--color-input);
+    color: var(--color-input-text);
+    font-size: 16px;
+    text-align: center;
+    border-style: solid;
+    border-width: 0 0 3px 0;
+    border-radius: var(--default-radius);
+    overflow: hidden;
+}

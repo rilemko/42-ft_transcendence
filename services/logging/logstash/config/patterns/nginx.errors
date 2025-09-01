@@ -1,0 +1,2 @@
+DATE_NGINX_ERRORS %{YEAR}/%{MONTHNUM}/%{MONTHDAY} %{TIME}
+PATTERN_NGINX_ERRORS %{DATE_NGINX_ERRORS:datetime} \[%{LOGLEVEL:level}\] %{NUMBER:pid}#%{NUMBER:tid}: \*%{NUMBER:id} %{GREEDYDATA:content}, client: %{IPORHOST:client}, server: %{IPORHOST:server}, request: "%{WORD:method} %{URIPATH:uri}(\?%{DATA:params})? HTTP/%{NUMBER:http_version}",( upstream: \"%{DATA:upstream}\",)? host: \"%{IPORHOST:host}\"(, referrer: \"%{DATA:referer}")?

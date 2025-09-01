@@ -1,0 +1,354 @@
+/* Variables */
+
+:root {
+    --color-primary: #e48d2d;
+    --color-secondary: #303030;
+    --color-success: #27ae60;
+    --color-alert: #c0392b;
+    --color-info: #2980b9;
+
+    --color-primary_hover: #ffb14a;
+    --color-secondary_hover: #3d3d3d;
+    --color-alert_hover: #cc473e;
+    --color-success_hover: #3fc372;
+    --color-info_hover: #3297da;
+
+    --color-input-text: #e3e3e3;
+    --color-input-text_disabled: #cccccc;
+    --color-input: #151515;
+    --color-input_disabled: #888888;
+    --color-input-border: #333333;
+    --color-input-border_disabled: #454545;
+
+    --default-padding: 24px;
+    --default-gap: 16px;
+    --default-radius: 5px;
+
+    --color-background-d: #252525;
+    --color-background-l: #e3e3e3;
+    --color-text-d: #151515;
+    --color-text-l: #e3e3e3;
+}
+
+/* Resets */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    outline: none;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    overflow: auto;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+}
+
+p {
+    font-size: 16px;
+    line-height: 24px;
+    text-align: left;
+}
+
+div {
+    position: relative;
+}
+
+/* Tables */
+
+table {
+    width: 100%;
+    font-size: 14px;
+    border-spacing: 0px 4px;
+}
+
+table th {
+    text-align: left;
+    padding: 16px;
+}
+
+table td {
+    padding: 16px;
+}
+
+table tr td:first-child {
+    border-radius: var(--default-radius) 0 0 var(--default-radius);
+}
+table tr td:last-child {
+    border-radius: 0 var(--default-radius) var(--default-radius) 0;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #101010;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-track:hover {
+    background-color: #151515;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+::-webkit-scrollbar-corner {
+    background-color: #101010;
+    border-radius: 5px;
+}
+
+/* Pages */
+
+.page {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Scenes */
+
+.scene {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    overflow: hidden;
+    z-index: 100;
+}
+
+/* Grid */
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--default-gap);
+}
+
+.col > .end {
+    margin-top: auto !important;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: var(--default-gap);
+}
+
+.row > .end {
+    margin-left: auto !important;
+}
+
+/* Buttons */
+
+.button.primary > button {
+    color: #e3e3e3;
+    background-color: var(--color-primary);
+}
+
+.button.primary:hover > button {
+    color: #e3e3e3;
+    background-color: var(--color-primary_hover);
+
+}
+
+.button.secondary > button {
+    color: #e3e3e3;
+    background-color: var(--color-secondary);
+}
+
+.button.secondary:hover > button {
+    background-color: var(--color-secondary_hover);
+}
+
+.button.success > button {
+    color: #e3e3e3;
+    background-color: var(--color-success);
+}
+
+.button.success:hover > button {
+    background-color: var(--color-success_hover);
+}
+
+.button.alert > button {
+    color: #e3e3e3;
+    background-color: var(--color-alert);
+}
+
+.button.alert:hover > button {
+    background-color: var(--color-alert_hover);
+}
+
+.button.space > button {
+    color: #e3e3e3;
+    background-color: rgba(255, 255, 255, 0.05);
+    text-transform: uppercase;
+}
+
+.button.space:hover > button {
+    background-color: transparent;
+}
+
+.button.space > button::before {
+    content: '';
+    top: 0;
+    left: 50%;
+    height: 4px;
+    width: 0%;
+    background-color: #e3e3e3;
+    transform: translateX(-50%);
+    transition: width 300ms ease-in-out;
+    position: absolute;
+}
+
+.button.space > button::after  {
+    content: '';
+    bottom: 0;
+    left: 50%;
+    height: 4px;
+    width: 0%;
+    background-color: #e3e3e3;
+    transform: translateX(-50%);
+    transition: width 300ms ease-in-out;
+    position: absolute;
+}
+
+.button.space:hover > button::before {
+    width: 100%;
+}
+
+.button.space:hover > button::after {
+    width: 100%;
+}
+
+/* Effects */
+
+.shine
+.shine_h {
+    overflow: hidden;
+}
+
+.shine::after,
+.shine_h::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg,
+        transparent,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.1),
+        transparent,
+        transparent
+        );
+}
+
+.shine::after {
+    animation: shine 3s ease-in-out infinite;
+}
+
+.shine_h:hover::after {
+    animation: shine 175ms ease-in-out;
+}
+
+@keyframes shine {
+    0%      {left: -125%}
+    30%     {left: 100%}
+    100%    {left: 100%}
+}
+
+/** Animations */
+
+@keyframes rotate {
+    100%    {transform: rotate(360deg)}
+}
+
+@keyframes slideDown {
+    0%      {transform: translateY(-75%)}
+    100%    {transform: translateY(0)}
+}
+
+@keyframes slideUp {
+    0%      {transform: translateY(+75%)}
+    100%    {transform: translateY(0)}
+}
+
+@keyframes slideUpOut {
+    0%      {transform: translateY(0)}
+    100%    {transform: translateY(-75%)}
+}
+
+@keyframes slideLeft {
+    0%      {transform: translateX(-75%)}
+    100%    {transform: translateX(0)}
+}
+
+@keyframes slideLeftOut {
+    0%      {transform: translateX(0)}
+    100%    {transform: translateX(-75%)}
+}
+
+@keyframes slideRight {
+    0%      {transform: translateX(+75%)}
+    100%    {transform: translateX(0)}
+}
+
+@keyframes slideOut {
+    0%      {transform: translateX(0)}
+    100%    {transform: translateX(+75%)}
+}
+
+@keyframes fadeIn {
+    0%      {opacity: 0}
+    100%    {opacity: 1}
+}
+
+@keyframes fadeOut {
+    0%      {opacity: 0}
+    100%    {opacity: 1}
+}
+
+@keyframes shake {
+    0%      {transform: translate(1px, 1px) rotate(0deg)}
+    5%      {transform: translate(-1px, -2px) rotate(-1deg)}
+    10%     {transform: translate(-3px, 0px) rotate(1deg)}
+    15%     {transform: translate(3px, 2px) rotate(0deg)}
+    20%     {transform: translate(1px, -1px) rotate(1deg)}
+    25%     {transform: translate(-1px, 2px) rotate(-1deg)}
+    30%     {transform: translate(-3px, 1px) rotate(0deg)}
+    35%     {transform: translate(3px, 1px) rotate(-1deg)}
+    40%     {transform: translate(-1px, -1px) rotate(1deg)}
+    45%     {transform: translate(1px, 2px) rotate(0deg)}
+    50%     {transform: translate(1px, -2px) rotate(-1deg)}
+}
+
+@keyframes gradient {
+	0%      {background-position: 0% 50%}
+	50%     {background-position: 100% 50%}
+	100%    {background-position: 0% 50%}
+}

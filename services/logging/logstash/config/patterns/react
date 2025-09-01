@@ -1,0 +1,2 @@
+DATE_REACT %{MONTHNUM}/%{MONTHDAY}/%{YEAR} %{TIME} (AM|PM)
+PATTERN_REACT %{WORD:level}  (%{DATE_REACT:datetime} %{IPORHOST:client} )?%{GREEDYDATA:content}

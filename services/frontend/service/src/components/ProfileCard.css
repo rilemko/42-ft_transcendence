@@ -1,0 +1,72 @@
+.profile-card {
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px;
+    background-color: var(--color-secondary);
+    border-radius: var(--default-radius);
+    overflow: hidden;
+}
+
+.profile-card > .button.profile {
+    flex: 1;
+}
+
+.profile-card > .button.profile > button {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+}
+
+.profile-card > .button.profile > button > .avatar {
+    height: 32px;
+    aspect-ratio: 1 / 1;
+    background-color: rgba(0, 0, 0, 0.1);
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-radius: 50%;
+}
+
+.profile-card > .button.profile > button > .avatar > .status {
+    right: 0;
+    bottom: 0;
+    height: 12px;
+    width: 12px;
+    background-color: var(--color-success);
+    border: 2px solid var(--color-background-d);
+    border-radius: 50%;
+    position: absolute;
+}
+
+.profile-card > .button.profile > button > .info {
+    gap: 8px !important;
+}
+
+.profile-card > .button.profile > button > .info > p.username {
+    font-size: 14px;
+    line-height: 18px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.profile-card > .button.profile > button > .info > p.status {
+    font-size: 12px;
+    line-height: 18px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.profile-card > .button.account,
+.profile-card > .button.account > button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 18px;
+}

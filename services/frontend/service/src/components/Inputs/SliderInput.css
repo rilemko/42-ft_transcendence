@@ -1,0 +1,56 @@
+.input > input[type=range] {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    min-width: 0;
+    width: 100%;
+    height: 8px;
+    background: var(--color-input);
+    border-radius: 8px;
+}
+
+.input > input[type=range]:hover {
+    opacity: 1;
+}
+
+.input > input[type=range]::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--color-primary);
+    transition-duration: 300ms;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.input > input[type=range]:disabled::-webkit-slider-thumb {
+    cursor: not-allowed;
+}
+
+.input > input[type=range]:hover::-webkit-slider-thumb {
+    background-color: var(--color-primary_hover);
+}
+
+.input > input[type=range]:disabled::-webkit-slider-thumb {
+    background-color: #888888;
+}
+
+.input > input[type=range]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--color-primary);
+    transition-duration: 300ms;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.input > input[type=range]:disabled::-moz-range-thumb {
+    cursor: not-allowed;
+}
+
+.input > input[type=range]:hover::-moz-range-thumb {
+    background-color: #e67e22;
+}
+
+.input > input[type=range]:disabled::-moz-range-thumb {
+    background-color: var(--color-input_disabled);
+}

@@ -1,0 +1,72 @@
+.window.profile .row.content
+{
+    flex: 1;
+    gap: 0;
+    height: 100%;
+}
+
+@media (max-width: 460px) {
+
+    .window.profile .row.content
+    {
+        flex-direction: column;
+    }
+}
+
+.window.profile .row.content > .col.preview
+{
+    flex: 0.5;
+    padding: var(--default-padding);
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 460px) {
+
+    .window.profile .row.content > .col.preview
+    {
+        max-height: 256px;
+    }
+}
+
+.window.profile .row.content > .col.preview > .avatar {
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    margin: auto;
+    background-color: rgba(0, 0, 0, 0.1);
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-radius: 50%;
+}
+
+@media (max-width: 460px) {
+
+    .window.profile .row.content > .col.preview > .avatar
+    {
+        height: 80% !important;
+        width: auto !important;
+    }
+}
+
+.window.profile .row.content > .col.action
+{
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.window.profile .row.content > .col.action .history
+{
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.window.profile .row.content > .col.action .statistics
+{
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

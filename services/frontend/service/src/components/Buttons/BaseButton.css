@@ -1,0 +1,59 @@
+.button {
+    flex-shrink: 0;
+    height: auto;
+    width: auto;
+    border-radius: var(--default-radius);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.row > .button {
+    flex: 1;
+}
+
+.button > .loading {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-content: center;
+    animation: fadeIn 300ms;
+    position: absolute;
+    z-index: 1;
+}
+
+.button > .loading > .loader {
+    margin: auto;
+}
+
+.button > button {
+    height: auto;
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 300ms;
+    border: none;
+    border-radius: var(--default-radius);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.button.round > button {
+    width: auto;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    padding: 12px !important;
+    font-size: 12px;
+    line-height: 0px;
+    border-radius: 50%;
+}
+
+.button > button:disabled {
+    background-color: #202020 !important;
+    color: #404040 !important;
+    cursor: not-allowed !important;
+}
+
+.button > button > i + span.text {
+    margin-left: 8px;
+}

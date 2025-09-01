@@ -1,0 +1,411 @@
+  ### SERVICE ####################################################
+
+  services:
+
+    ## > PUBLIC < ##################
+
+    nginx:
+      container_name: nginx
+      image: nginx:transcendance
+      build: ./services/nginx
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=nginx
+      depends_on:
+        frontend:
+          condition: service_healthy
+        grafana:
+          condition: service_healthy
+        kibana:
+          condition: service_healthy
+        logstash:
+          condition: service_healthy
+        auth:
+          condition: service_healthy
+        game:
+          condition: service_healthy
+      ports:
+        - 8080:8080
+        - 8443:8443
+      networks:
+        - backend
+        - frontend
+        - logging
+        - monitoring
+      restart: unless-stopped
+
+    ## > FRONTEND < ################
+
+    frontend:
+      container_name: frontend
+      image: frontend:transcendance
+      build: ./services/frontend
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=frontend
+        - T_SELF_BEAT=https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.15.3-linux-x86_64.tar.gz
+      networks:
+        - backend
+        - frontend
+        - logging
+      restart: unless-stopped
+
+    ## > BACKEND < #################
+
+    auth:
+      container_name: auth
+      image: auth:transcendance
+      build: ./services/backend/api_auth
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=auth
+        - T_SELF_REDIS_ID=0
+      depends_on:
+        db_auth:
+          condition: service_healthy
+        logstash:
+          condition: service_healthy
+        redis:
+          condition: service_healthy
+      volumes:
+        - api_auth:/app/service/media
+      networks:
+        - backend
+        - caching
+        - databases
+        - logging
+      restart: unless-stopped
+
+    game:
+      container_name: game
+      image: game:transcendance
+      build: ./services/backend/api_game
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=game
+        - T_SELF_REDIS_ID=1
+      depends_on:
+        db_game:
+          condition: service_healthy
+        logstash:
+          condition: service_healthy
+        redis:
+          condition: service_healthy
+      volumes:
+        - api_game:/app/service/media
+      networks:
+        - backend
+        - caching
+        - databases
+        - logging
+      restart: unless-stopped
+
+    ## > DATABASES < ###############
+
+    db_auth:
+      container_name: db_auth
+      image: db_auth:transcendance
+      build: ./services/databases/db_auth
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=db_auth
+        - T_SELF_BEAT=https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.15.3-linux-x86_64.tar.gz
+      depends_on:
+        logstash:
+          condition: service_healthy
+      volumes:
+        - db_auth:/app/storage
+      networks:
+        - databases
+        - logging
+      restart: unless-stopped
+
+    db_game:
+      container_name: db_game
+      image: db_game:transcendance
+      build: ./services/databases/db_game
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=db_game
+        - T_SELF_BEAT=https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.15.3-linux-x86_64.tar.gz
+      depends_on:
+        logstash:
+          condition: service_healthy
+      volumes:
+        - db_game:/app/storage
+      networks:
+        - databases
+        - logging
+      restart: unless-stopped
+
+    ## > CACHING < #################
+
+    redis:
+      container_name: redis
+      image: redis:transcendance
+      build: ./services/caching/redis
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=redis
+        - T_SELF_BEAT=https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.15.3-linux-x86_64.tar.gz
+      depends_on:
+        logstash:
+          condition: service_healthy
+      networks:
+        - caching
+        - logging
+      restart: unless-stopped
+
+    ## > MONITORING < ##############
+
+    grafana:
+      container_name: grafana
+      image: grafana:transcendance
+      build: ./services/monitoring/grafana
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=grafana
+        - T_SELF_REPO=https://dl.grafana.com/oss/release/grafana-11.2.2.linux-amd64.tar.gz
+      depends_on:
+        prometheus:
+          condition: service_healthy
+      volumes:
+        - grafana:/app/storage
+      networks:
+        - monitoring
+      restart: unless-stopped
+
+    prometheus:
+      container_name: prometheus
+      image: prometheus:transcendance
+      build: ./services/monitoring/prometheus
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=prometheus
+        - T_SELF_REPO=https://github.com/prometheus/prometheus/releases/download/v2.54.1/prometheus-2.54.1.linux-amd64.tar.gz
+      depends_on:
+        alertmanager:
+          condition: service_healthy
+      volumes:
+        - prometheus:/app/storage
+      networks:
+        - backend
+        - monitoring
+      restart: unless-stopped
+
+    alertmanager:
+      container_name: alertmanager
+      image: alertmanager:transcendance
+      build: ./services/monitoring/alertmanager
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=alertmanager
+        - T_SELF_REPO=https://github.com/prometheus/alertmanager/releases/download/v0.27.0/alertmanager-0.27.0.linux-amd64.tar.gz
+      networks:
+        - monitoring
+      restart: unless-stopped
+
+    export_node:
+      container_name: export_node
+      image: export_node:transcendance
+      build: ./services/monitoring/export_node
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=export_node
+        - T_SELF_REPO=https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz
+      networks:
+        - monitoring
+      restart: unless-stopped
+
+    export_nginx:
+      container_name: export_nginx
+      image: export_nginx:transcendance
+      build: ./services/monitoring/export_nginx
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=export_nginx
+        - T_SELF_REPO=https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v1.3.0/nginx-prometheus-exporter_1.3.0_linux_amd64.tar.gz
+      depends_on:
+        nginx:
+          condition: service_healthy
+      networks:
+        - frontend
+        - monitoring
+      restart: unless-stopped
+
+    export_postgresql:
+      container_name: export_postgresql
+      image: export_postgresql:transcendance
+      build: ./services/monitoring/export_postgresql
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=export_postgresql
+        - T_SELF_REPO=https://github.com/prometheus-community/postgres_exporter/releases/download/v0.15.0/postgres_exporter-0.15.0.linux-amd64.tar.gz
+      depends_on:
+        db_auth:
+          condition: service_healthy
+        db_game:
+          condition: service_healthy
+      networks:
+        - databases
+        - monitoring
+      restart: unless-stopped
+
+    export_redis:
+      container_name: export_redis
+      image: export_redis:transcendance
+      build: ./services/monitoring/export_redis
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=export_redis
+        - T_SELF_REPO=https://github.com/oliver006/redis_exporter/releases/download/v1.63.0/redis_exporter-v1.63.0.linux-amd64.tar.gz
+      depends_on:
+        redis:
+          condition: service_healthy
+      networks:
+        - caching
+        - monitoring
+      restart: unless-stopped
+
+    export_elasticsearch:
+      container_name: export_elasticsearch
+      image: export_elasticsearch:transcendance
+      build: ./services/monitoring/export_elasticsearch
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=export_elasticsearch
+        - T_SELF_REPO=https://github.com/prometheus-community/elasticsearch_exporter/releases/download/v1.8.0/elasticsearch_exporter-1.8.0.linux-amd64.tar.gz
+      depends_on:
+        elasticsearch:
+          condition: service_healthy
+      networks:
+        - logging
+        - monitoring
+      restart: unless-stopped
+
+    # ## > LOGGING < #################
+
+    kibana:
+      container_name: kibana
+      image: kibana:transcendance
+      build: ./services/logging/kibana
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=kibana
+        - T_SELF_REPO=https://artifacts.elastic.co/downloads/kibana/kibana-8.15.2-linux-x86_64.tar.gz
+      depends_on:
+        elasticsearch:
+          condition: service_healthy
+      networks:
+        - logging
+      restart: unless-stopped
+
+    elasticsearch:
+      container_name: elasticsearch
+      image: elasticsearch:transcendance
+      build: ./services/logging/elasticsearch
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=elasticsearch
+        - T_SELF_REPO=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.15.2-linux-x86_64.tar.gz
+      volumes:
+        - elasticsearch:/app/storage
+      networks:
+        - logging
+      restart: unless-stopped
+
+    logstash:
+      container_name: logstash
+      image: logstash:transcendance
+      build: ./services/logging/logstash
+      platform: linux/amd64
+      env_file: ./.env
+      environment:
+        - T_SELF_NAME=logstash
+        - T_SELF_REPO=https://artifacts.elastic.co/downloads/logstash/logstash-8.15.2-linux-x86_64.tar.gz
+      depends_on:
+        elasticsearch:
+          condition: service_healthy
+      networks:
+        - logging
+      restart: unless-stopped
+
+  ### VOLUMES ####################################################
+
+  volumes:
+
+    ## > BACKEND < #################
+
+    api_auth:
+    api_game:
+
+    ## > DATABASES < ###############
+
+    db_auth:
+    db_game:
+
+    ## > MONITORING < ##############
+
+    grafana:
+    prometheus:
+
+    ## > LOGGING < #################
+
+    elasticsearch:
+
+  ### NETWORK ####################################################
+
+  networks:
+
+    frontend:
+      name: frontend
+      ipam:
+        config:
+          - subnet: 10.0.0.0/24
+
+    backend:
+      name: backend
+      ipam:
+        config:
+          - subnet: 10.1.0.0/24
+
+    databases:
+      name: databases
+      ipam:
+        config:
+          - subnet: 10.2.0.0/24
+
+    caching:
+      name: caching
+      ipam:
+        config:
+          - subnet: 10.3.0.0/24
+
+    monitoring:
+      name: monitoring
+      ipam:
+        config:
+          - subnet: 10.4.0.0/24
+
+    logging:
+      name: logging
+      ipam:
+        config:
+          - subnet: 10.5.0.0/24
