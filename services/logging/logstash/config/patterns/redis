@@ -1,0 +1,2 @@
+DATE_REDIS %{MONTHDAY} %{MONTH} %{YEAR} %{TIME}
+PATTERN_REDIS %{NUMBER:pid}:%{DATA:role} %{DATE_REDIS:datetime} %{DATA:level} %{GREEDYDATA:content}

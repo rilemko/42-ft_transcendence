@@ -1,0 +1,24 @@
+image.image-preview {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: auto;
+}
+
+.image-preview > label {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.image-preview .img {
+    width: 100%;
+    height: 256px;
+    background-color: rgba(0, 0, 0, 0.3);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: auto 90%;
+    border-radius: var(--default-radius) var(--default-radius);
+    overflow: hidden
+}

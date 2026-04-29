@@ -1,0 +1,29 @@
+.input > input[type=color] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 37px;
+    min-width: 0;
+    width: 100%;
+    padding: 0;
+    background-color: var(--color-input);
+    border-style: solid;
+    border-width: 0 0 3px 0;
+    border-radius: var(--default-radius);
+    overflow: hidden;
+
+}
+
+.input > input[type=color]:disabled {
+    opacity: 1;
+    background-color: var(--color-input_disabled) !important;
+    cursor: not-allowed;
+}
+
+.input > input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
+.input > input[type=color]::-webkit-color-swatch {
+    border: none;
+}

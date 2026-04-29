@@ -1,0 +1,1 @@
+{"type":"index-pattern","id":"logs-django","attributes":{"name":"logs-django","title":"logs-django-*","timeFieldName":"@timestamp"}}

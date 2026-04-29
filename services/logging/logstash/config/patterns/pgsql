@@ -1,0 +1,2 @@
+DATE_PGSQL %{YEAR}-%{MONTHNUM}-%{MONTHDAY} %{TIME}
+PATTERN_PGSQL %{DATE_PGSQL:datetime} UTC, database: \"%{DATA:database}\", pid: \"%{NUMBER:pid}\", (client: \"%{IPORHOST:client}\", user: \"%{USERNAME:user}\" )?%{DATA:level}: %{GREEDYDATA:content}

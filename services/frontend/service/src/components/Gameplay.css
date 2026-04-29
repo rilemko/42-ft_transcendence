@@ -1,0 +1,64 @@
+.gameplay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.gameplay > .loading {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    align-content: center;
+    animation: fadeIn 300ms;
+    position: absolute;
+    z-index: 1;
+}
+
+.gameplay > .loading > .loader {
+    margin: auto;
+}
+
+.gameplay > .loading > p {
+    margin-top: var(--default-padding);
+    color: var(--color-text-l);
+    font-weight: bold;
+    text-align: center;
+}
+
+.gameplay > .game {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.gameplay > .controls.row {
+    display: none;
+    height: 35%;
+    width: 100%;
+    bottom: 0;
+    padding: 24px;
+    animation: fadeIn 300ms;
+    position: absolute;
+    z-index: 1;
+}
+
+@media (pointer: coarse) {
+
+    .gameplay > .controls.controls.row  {
+        display: flex !important;
+    }
+}
+
+.gameplay > .controls.row > .col {
+    align-items: center;
+    justify-content: center;
+}
+
+.gameplay > .controls.row > .col {
+    flex: 1;
+}
+
+.gameplay > .controls.row > .col > .button > button {
+    height: 80px;
+    width: 80px;
+}

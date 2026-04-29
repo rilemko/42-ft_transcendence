@@ -1,0 +1,84 @@
+.window-container
+{
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    align-content: center;
+    animation: fadeIn 300ms;
+    position: fixed;
+    overflow: hidden;
+    z-index: 500;
+}
+
+.window-container > .window
+{
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    max-height: 90%;
+    width: 90%;
+    max-width: 800px;
+    margin: auto;
+    background-color: var(--color-background-d);
+    color: var(--color-text-l);
+    animation: slideUp 300ms;
+    border-radius: var(--default-radius);
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+@media (max-width: 460px) {
+
+    .window-container > .window {
+        top: 0;
+        height: 100% !important;
+        max-height: 100% !important;
+        width: 100% !important;
+        border-radius: 0 !important;
+        position: absolute !important;
+        overflow-y: auto !important;
+        overflow-x: hidden;
+    }
+}
+
+.window-container > .window > header.row
+{
+    align-items: center;
+    padding: var(--default-padding);
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.window-container > .window > header.row > .col.title
+{
+    flex: auto;
+}
+
+.window-container > .window > header.row > .col.control
+{
+    flex: none;
+}
+
+.window-container > .window > .col.content
+{
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.window-container > .window > .row.action
+{
+    padding: var(--default-padding);
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 460px) {
+
+    .window-container > .window > .row.action {
+        flex-direction: column-reverse !important;
+    }
+}

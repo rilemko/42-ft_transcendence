@@ -1,0 +1,27 @@
+.page#page-index > section.view {
+    height: 100%;
+    width: 100%;
+    align-content: center;
+    position: absolute;
+}
+
+.page#page-index > section.view > .wrapper {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    max-height: 90%;
+    width: 90%;
+    max-width: 480px;
+    margin: auto;
+    position: relative;
+}
+
+.page#page-index > section.view > .wrapper > nav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: auto;
+    width: 100%;
+    margin-top: 128px;
+    position: relative;
+}

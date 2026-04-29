@@ -1,0 +1,41 @@
+.match-list {
+    gap: 0 !important;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.match-list > .loading {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-content: center;
+    animation: fadeIn 300ms;
+    position: absolute;
+    z-index: 1;
+}
+
+.match-list > .loading > .loader {
+    margin: auto;
+}
+
+.match-list > header {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+
+.match-list > header > h3 {
+    color: #e3e3e3;
+}
+
+.match-list > header > .button.refresh {
+    margin-left: auto;
+}
+
+.match-list > .content {
+    gap: 8px !important;
+    padding: 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

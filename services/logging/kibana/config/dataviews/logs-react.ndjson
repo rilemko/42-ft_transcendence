@@ -1,0 +1,1 @@
+{"type":"index-pattern","id":"logs-react","attributes":{"name":"logs-react","title":"logs-react-*","timeFieldName":"@timestamp"}}

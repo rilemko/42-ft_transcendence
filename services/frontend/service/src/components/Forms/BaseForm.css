@@ -1,0 +1,8 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    height: auto;
+    width: auto;
+    position: relative;
+}

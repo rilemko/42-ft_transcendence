@@ -1,0 +1,339 @@
+### ALERTING ###################################################
+
+groups:
+
+### > GENERAL < ################
+
+- name: General
+  rules:
+
+  - alert: InstanceIsDown
+    expr: up == 0
+    for: 20s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] Instance is down !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : Instance is down."
+
+### > HOST < ###################
+
+- name: Host
+  rules:
+
+  - alert: HostHighMemoryUsage
+    expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 10
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] Host: High memory usage !"
+      description: "Low available RAM memory (< 10%)."
+
+  - alert: HostHighDiskUsage
+    expr: (node_filesystem_avail_bytes * 100) / node_filesystem_size_bytes < 10 and ON (instance, device, mountpoint) node_filesystem_readonly == 0
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] Host: High disk usage !"
+      description: "Low available disk memory (< 10%)."
+
+  - alert: HostHighCpuLoad
+    expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100) > 80
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] Host: High CPU load !"
+      description: "The CPU load is too high (> 80%)."
+
+  - alert: HostUnusualDiskReadRate
+    expr: sum by (instance) (rate(node_disk_read_bytes_total[2m])) / 1024 / 1024 > 50
+    for: 30s
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] Host: Unusual disk read rate !"
+      description: "The disk is overloaded with read operations (> 50MB/s)."
+
+  - alert: HostUnusualDiskWriteRate
+    expr: sum by (instance) (rate(node_disk_written_bytes_total[2m])) / 1024 / 1024 > 50
+    for: 30s
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] Host: Unusual disk write rate !"
+      description: "The disk is overloaded by write operations (> 50MB/s)."
+
+  - alert: HostNetworkError
+    expr: rate(node_network_receive_errs_total[10s]) > 0 or rate(node_network_transmit_errs_total[10s]) > 0
+    for: 1s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] Host: Network error !"
+      description: "A network error has been detected."
+
+  - alert: HostUnusualNetworkReceptionRate
+    expr: sum by (instance) (rate(node_network_receive_bytes_total[2m])) / 1024 / 1024 > 100
+    for: 30s
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] Host: Unusual network reception rate !"
+      description: "The network is unusually overloaded with data reception (> 100MB/s)."
+
+  - alert: HostUnusualNetworkSendingRate
+    expr: sum by (instance) (rate(node_network_transmit_bytes_total[2m])) / 1024 / 1024 > 100
+    for: 30s
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] Host: Unusual network sending rate !"
+      description: "The network is unusually overloaded with data sending (> 100MB/s)."
+
+### > DJANGO < #################
+
+- name: Django
+  rules:
+
+  - alert: DjangoHighRequestLatency
+    expr: rate(http_request_duration_seconds_sum[1m]) / rate(http_request_duration_seconds_count[1m]) > 1
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] Django: High request latency !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The average request latency rate is too high (> 1s)."
+
+  - alert: DjangoHigh500ErrorRate
+    expr: rate(django_http_responses_total{status="500"}[1m]) > 0
+    for: 1s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] Django: High 500 error rate !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : A 500 error has been detected."
+
+  - alert: DjangoHigh404ErrorRate
+    expr: rate(django_http_responses_total{status="404"}[1m]) > 5
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] Django: High 404 error rate !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The 404 error rate is too high (> 5/m)."
+
+  - alert: DjangoHightPendingRequestRate
+    expr: sum(rate(django_http_requests_in_progress[1m])) > 10
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] Django: High pending request rate !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The pending request rate is too high (> 10/m)."
+
+  - alert: DjangoDatabaseError
+    expr: rate(django_db_errors_total[1m]) > 0
+    for: 1s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] Django: Database error !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : A database error has been detected."
+
+  - alert: DjangoHighDatabaseQueryRate
+    expr: rate(django_db_queries_total[1m]) > 50
+    for: 30s
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] Django: High database query rate !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The database query rate is too high (> 50/s)."
+
+  - alert: DjangoHighCacheErrorRate
+    expr: rate(django_cache_errors_total[1m]) > 0
+    for: 1s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] Django: High cache error rate !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : A cache error has been detected."
+
+  - alert: DjangoHighCacheMissRate
+    expr: rate(django_cache_get_total{result="miss"}[1m]) / rate(django_cache_requests_total[1m]) > 0.05
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] Django: High cache miss rate !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The cache miss rate is too high (> 5%)."
+
+### > POSTGRESQL < #############
+
+- name: PostgreSQL
+  rules:
+
+  - alert: PostgreSQLHighCpuLoad
+    expr: rate(pg_stat_cpu_usage_total[1m]) > 0.8
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] PostgreSQL: High CPU load !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The CPU load is too high (> 80%)."
+
+  - alert: PostgreSQLHighMemoryUsage
+    expr: rate(pg_stat_memory_usage_total[1m]) > 0.9
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] PostgreSQL: High memory usage !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : Low available RAM memory (< 10%)."
+
+  - alert: PostgreSQLHighRequestLatency
+    expr: rate(pg_stat_response_time_seconds_sum[1m]) / rate(pg_stat_response_time_seconds_count[1m]) > 1
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] PostgreSQL: High request latency !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The average request latency rate is too high (> 1s)."
+
+  - alert: PostgreSQLHighActivity
+    expr: pg_stat_activity_count{state="active"} > 80
+    for: 30s
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] PostgreSQL: High activity !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The number of active connections is too high (> 80)."
+
+  - alert: PostgreSQLQueryError
+    expr: rate(pg_stat_errors_total[1m]) > 0
+    for: 1s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] PostgreSQL: Query error !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : A query error has been detected."
+
+  - alert: PostgreSQLUnusualReadRate
+    expr: rate(pg_stat_read_total[1m]) > 1000
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] PostgreSQL : Unusual read rate !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The database is unusually overloaded with data reading (> 1000/m)."
+
+  - alert: PostgreSQLUnusualWriteRate
+    expr: rate(pg_stat_write_total[1m]) > 500
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] PostgreSQL: Unusual write rate !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The database is unusually overloaded with data writing (> 500/m)."
+
+### > REDIS < ##################
+
+- name: Redis
+  rules:
+
+  - alert: RedisHighMemoryUsage
+    expr: redis_memory_used_bytes / redis_memory_max_bytes > 0.9
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] Redis: High memory usage !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : Low available RAM memory (< 10%)."
+
+  - alert: RedisHighRequestLatency
+    expr: rate(redis_command_latency_seconds_sum[1m]) / rate(redis_command_latency_seconds_count[1m]) > 0.1
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] Redis: High request latency !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The average request latency rate is too high (> 100ms)."
+
+  - alert: RedisHighActivity
+    expr: redis_connected_clients > 450
+    for: 30s
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] Redis: High activity !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The number of active connections is too high (> 450)."
+
+  - alert: RedisHighRequestRate
+    expr: rate(redis_commands_processed_total[1m]) > 5000
+    for: 30s
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] Redis: High request rate !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The request rate is too high (> 5000/s)."
+
+  - alert: RedisHighRejectedConnections
+    expr: rate(redis_rejected_connections_total[1m]) > 100
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] Redis : High rejected connections !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The rate of rejected connections is too high (> 100/s)."
+
+### > ELASTICSEARCH < ##########
+
+- name: Elasticsearch
+  rules:
+
+  - alert: ElasticsearchHighCpuUsage
+    expr: rate(elasticsearch_cpu_usage_percent[1m]) > 80
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] Elasticsearch: High CPU usage !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The CPU usage is too high (> 80%)."
+
+  - alert: ElasticsearchHighMemoryUsage
+    expr: rate(elasticsearch_memory_usage_percent[1m]) > 90
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] Elasticsearch: High memory usage !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : Low available RAM memory (< 10%)."
+
+  - alert: ElasticsearchHighDiskUsage
+    expr: rate(elasticsearch_disk_usage_percent[1m]) > 90
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] Elasticsearch: High disk usage !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : Low available disk memory (< 10%)."
+
+  - alert: ElasticsearchClusterStatusRed
+    expr: elasticsearch_cluster_health_status{job="elasticsearch"} == 2
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "[{{ $labels.severity }}] Elasticsearch: Cluster status red !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The cluster status is red."
+
+  - alert: ElasticsearchHighIndexingLatency
+    expr: rate(elasticsearch_indexing_latency_seconds_sum[1m]) / rate(elasticsearch_indexing_latency_seconds_count[1m]) > 1
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "[{{ $labels.severity }}] Elasticsearch: High indexing latency !"
+      description: "<{{ $labels.job }}|{{ $labels.instance }}> : The average indexing latency is too high (> 1s)."

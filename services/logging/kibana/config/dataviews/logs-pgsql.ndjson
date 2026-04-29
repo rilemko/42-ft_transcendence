@@ -1,0 +1,1 @@
+{"type":"index-pattern","id":"logs-pgsql","attributes":{"name":"logs-pgsql","title":"logs-pgsql-*","timeFieldName":"@timestamp"}}
